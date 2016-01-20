@@ -5,6 +5,7 @@ vendor
 .bundle
 .env
 .ruby-version
+tmp
 
 *.log
 *.log.*
