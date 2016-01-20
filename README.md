@@ -1,8 +1,9 @@
 # Content Security Policy (CSP) Violation Report Handler
 
 Tiny Sinatra application to parse CSP violation reports,
-format them nicely, and forward them on to an email address.
-Easy to deploy with Passenger, or any other app container.
+format them nicely, and forward them on to an email address
+using sendmail (via Pony gem). Easy to deploy with Passenger,
+or any other app container.
 
 ## Setup
 
