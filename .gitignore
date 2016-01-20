@@ -3,3 +3,8 @@ Thumbs.db
 ._*
 vendor
 .bundle
+.env
+.ruby-version
+
+*.log
+*.log.*
