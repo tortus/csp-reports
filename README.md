@@ -21,6 +21,11 @@ Run app.rb using bundler:
 
     bundle exec ruby ./app.rb
 
+Or rackup:
+
+    bundle exec rackup
+
+
 ### Multiple Recipients
 
 ```CSP_REPORT_RECIPIENTS``` is passed as-is to sendmail (via Pony), so
