@@ -11,15 +11,14 @@ Set the following environment variables, or place them in your
     CSP_REPORT_SENDER="CSP Reports <csp-reports@mysite.com>"
     CSP_REPORT_RECIPIENTS="csp-violations@mysite.com"
 
-CSP_REPORT_RECIPIENTS is passed as-is to sendmail (via Pony), so
-just separate multiple recipients with commas.
-
 Apache example:
-
 ```apache
 SetEnv CSP_REPORT_SENDER "CSP Reports <csp-reports@mysite.com>"
 SetEnv CSP_REPORT_RECIPIENTS "csp-violations@mysite.com"
 ```
+
+CSP_REPORT_RECIPIENTS is passed as-is to sendmail (via Pony), so
+just separate multiple recipients with commas.
 
 Run app.rb using bundler:
 
