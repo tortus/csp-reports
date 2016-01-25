@@ -56,7 +56,12 @@ class Report
 end
 
 DataMapper.finalize
-DataMapper.auto_migrate! if ENV['MIGRATE'] =~ /\At(true)?|y(es)?|1/i
+
+if ENV['MIGRATE'] =~ /\At(true)?|y(es)?|1/i
+  puts "Migrating database..."
+  DataMapper.auto_migrate!
+  exit 0
+end
 
 route :get, :post, '/' do
   request.body.rewind
