@@ -7,17 +7,8 @@ or any other app container.
 
 ## Setup
 
-Set the following environment variables, or place them in your
-__.env__ file in development mode:
-
-    CSP_REPORT_SENDER="CSP Reports <csp-reports@mysite.com>"
-    CSP_REPORT_RECIPIENTS="csp-violations@mysite.com"
-
-Apache example:
-```apache
-SetEnv CSP_REPORT_SENDER "CSP Reports <csp-reports@mysite.com>"
-SetEnv CSP_REPORT_RECIPIENTS "csp-violations@mysite.com"
-```
+1. Save a copy of __config.sample.yml__ as __config.yml__.
+2. Edit config.yml wih the settings that make sense for you.
 
 Run app.rb using bundler:
 
@@ -30,8 +21,8 @@ Or rackup:
 
 ### Multiple Recipients
 
-```CSP_REPORT_RECIPIENTS``` is passed as-is to sendmail (via Pony), so
-just separate multiple recipients with commas.
+The "recipients" option in config.yml is passed as-is to sendmail
+(via Pony), so just separate multiple recipients with commas.
 
 ## Testing
 

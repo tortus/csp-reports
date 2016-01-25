@@ -1,0 +1,11 @@
+database:
+  schema: csp_reports
+  username:
+  password:
+  host: localhost
+  port: 5432
+
+notifications:
+  enabled: true
+  sender: "CSP Reports <csp-reports@mysite.com>"
+  recipients: "csp-reports@mysite.com"
