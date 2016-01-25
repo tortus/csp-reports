@@ -60,6 +60,7 @@ DataMapper.finalize
 if ENV['MIGRATE'] =~ /\At(true)?|y(es)?|1/i
   puts "Migrating database..."
   DataMapper.auto_migrate!
+  puts "Success!"
   exit 0
 end
 
