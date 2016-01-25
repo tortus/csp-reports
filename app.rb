@@ -11,6 +11,8 @@ config_file './config.yml'
 
 DataMapper.setup(:default, "postgres://#{settings.database['user']}:#{settings.database['password']}@#{settings.database['host']}/#{settings.database['schema']}")
 
+# TODO: don't treat same violated directive at separate URI's on the same domain
+# as different errors.
 class Report
   include DataMapper::Resource
 
