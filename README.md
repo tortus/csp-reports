@@ -29,7 +29,7 @@ The "recipients" option in config.yml is passed as-is to sendmail
 
 ## Testing
 
-Testing is easy with curl. Replace 'https://csp-reports.mysite.com/'
+Testing is easy with curl. Replace ```http://localhost:4567/```
 (the last argument) with your URL:
 
-    curl -H 'Content-Type: application/csp-report;charset=utf-8' --data '{"csp-report":{"document-uri":"https://example.com/foo/bar","referrer":"https://www.google.com/","violated-directive":"default-src self","original-policy":"default-src self; report-uri /csp-hotline.php","blocked-uri":"http://evilhackerscripts.com"}}' 'https://csp-reports.mysite.com/'
+    curl -H 'Content-Type: application/csp-report;charset=utf-8' --data '{"csp-report":{"document-uri":"https://example.com/foo/bar","referrer":"https://www.google.com/","violated-directive":"default-src self","original-policy":"default-src self; report-uri /csp-hotline.php","blocked-uri":"http://evilhackerscripts.com"}}' 'http://localhost:4567/'
