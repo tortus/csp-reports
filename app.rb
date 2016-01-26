@@ -10,6 +10,7 @@ require 'digest/bubblebabble'
 config_file './config.yml'
 
 DataMapper.setup(:default, "postgres://#{settings.database['username']}:#{settings.database['password']}@#{settings.database['host']}/#{settings.database['schema']}")
+DataMapper::Model.raise_on_save_failure = true
 
 # TODO: don't treat same violated directive at separate URI's on the same domain
 # as different errors.
@@ -71,7 +72,7 @@ route :get, :post, '/' do
   report = Report.find_or_new_by_request_body(raw_text)
 
   if report.new?
-    report.save!
+    report.save
     logger.info "Registered new problem:\n#{report.formatted_body_json}"
 
     if settings.notifications['enabled']
@@ -84,7 +85,7 @@ route :get, :post, '/' do
     end
   else
     report.count += 1
-    report.save!
+    report.save
     logger.info "Registered new occurrence of problem #{report.sha256} Count: #{report.count}"
   end
 
