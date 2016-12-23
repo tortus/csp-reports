@@ -1,19 +1,18 @@
-require 'sinatra'
-require 'sinatra/multi_route'
-require 'sinatra/config_file'
-require 'json'
-require 'pony'
-require 'data_mapper'
-require 'digest'
-require 'digest/bubblebabble'
-
-config_file './config.yml'
-
-DataMapper.setup(:default, "postgres://#{settings.database['username']}:#{settings.database['password']}@#{settings.database['host']}/#{settings.database['schema']}")
-DataMapper::Model.raise_on_save_failure = true
-
 # TODO: don't treat same violated directive at separate URI's on the same domain
 # as different errors.
+#
+# Usage in Sinatra:
+#
+#     request.body.rewind
+#     raw_text = request.body.read
+#     report = Report.find_or_new_by_request_body(raw_text)
+#     if report.new?
+#       report.save
+#     else
+#       report.count += 1
+#       report.save
+#     end
+#
 class Report
   include DataMapper::Resource
 
@@ -54,41 +53,4 @@ class Report
       self.blocked_uri        = report['blocked-uri']
     end
   end
-end
-
-DataMapper.finalize
-
-if ENV['MIGRATE'] =~ /\At(true)?|y(es)?|1/i
-  puts "Migrating database..."
-  DataMapper.auto_migrate!
-  puts "Success!"
-  exit 0
-end
-
-route :get, :post, '/' do
-  request.body.rewind
-  raw_text = request.body.read
-
-  report = Report.find_or_new_by_request_body(raw_text)
-
-  if report.new?
-    report.save
-    logger.info "Registered new problem:\n#{report.formatted_body_json}"
-
-    if settings.notifications['enabled']
-      Pony.mail(
-       :to => settings.notifications['recipients'],
-       :from => settings.notifications['sender'],
-       :subject => 'CSP violation',
-       :body => report.formatted_body_json
-      )
-    end
-  else
-    report.count += 1
-    report.save
-    logger.info "Registered new occurrence of problem #{report.sha256} Count: #{report.count}"
-  end
-
-  status 204
-  body nil
 end

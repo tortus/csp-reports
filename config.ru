@@ -3,5 +3,7 @@ require 'bundler'
 
 Bundler.require(:default, ENV.fetch('RACK_ENV'){ :development }.to_sym )
 
-require './app'
-run Sinatra::Application
+require './boot'
+
+map('/admin') { run AdminController }
+map('/') { run ReportsController }
