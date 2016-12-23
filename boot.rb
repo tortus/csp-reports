@@ -10,11 +10,15 @@ require 'digest/bubblebabble'
 
 module CSPReports
   def self.root
-    @root ||= File.expand_path('..', __FILE__)
+    @_root ||= File.expand_path('..', __FILE__)
   end
 
   def self.config
-    @config ||= YAML.load(ERB.new(File.read(root + '/config/config.yml')).result)
+    @_config ||= YAML.load(ERB.new(File.read(root + '/config/config.yml')).result)
+  end
+
+  def self.env
+    @_env ||= ENV.fetch('RACK_ENV') { 'development' }
   end
 end
 
