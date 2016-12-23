@@ -11,7 +11,7 @@ class ReportsController < Sinatra::Base
       report.save
       logger.info "Registered new problem:\n#{report.formatted_body_json}"
 
-      if settings.notifications['enabled']
+      if CSPReports.config['notifications']['enabled']
         Pony.mail(
          :to => settings.notifications['recipients'],
          :from => settings.notifications['sender'],

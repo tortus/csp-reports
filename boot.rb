@@ -8,9 +8,17 @@ require 'data_mapper'
 require 'digest'
 require 'digest/bubblebabble'
 
+module CSPReports
+  def self.root
+    @root ||= File.expand_path('..', __FILE__)
+  end
 
-settings = YAML.load(ERB.new(File.read('./config/config.yml')).result)
-db = settings.fetch('database')
+  def self.config
+    @config ||= YAML.load(ERB.new(File.read(root + '/config/config.yml')).result)
+  end
+end
+
+db = CSPReports.config.fetch('database')
 
 DataMapper.setup(:default, "postgres://#{db.fetch('username')}:#{db.fetch('password')}@#{db.fetch('host')}/#{db.fetch('schema')}")
 DataMapper::Model.raise_on_save_failure = true
