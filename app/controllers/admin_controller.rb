@@ -11,6 +11,8 @@ class AdminController < Sinatra::Base
     erb :index
   end
 
+  # TODO: paginate results
+  # TODO: add search
   get '/domains/:domain' do
     @domain = params[:domain].to_s
     logger.info "DOMAIN: #{@domain}"
@@ -20,6 +22,7 @@ class AdminController < Sinatra::Base
 
   get '/reports/:id' do
     @report = Report.first(id: params[:id])
+    return 404 unless @report
     @domain = @report.domain
     erb :report
   end

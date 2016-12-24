@@ -1,6 +1,3 @@
-# TODO: don't treat same violated directive at separate URI's on the same domain
-# as different errors.
-#
 # Usage in Sinatra:
 #
 #     request.body.rewind
@@ -13,6 +10,15 @@
 #       report.save
 #     end
 #
+# TODO: Coalesce reports from the same domain with matching violations.
+# There are a lot of redundant reports for violations that happen the same on EVERY page.
+# This would mostly involve checking for reports from the same domain with the same
+# blocked URI and violated directive. We probably don't care about each unique document URI,
+# and I'm not sure how to save that without a schema overhaul.
+#
+# TODO: Add ability to mark report as "resolved".
+#
+# TODO: Switch to Sequel or ActiveRecord, because this is awful.
 class Report
   include DataMapper::Resource
 
