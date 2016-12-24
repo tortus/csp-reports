@@ -1,13 +1,23 @@
 class ReportsController < Sinatra::Base
-  register Sinatra::MultiRoute
 
   enable :logging
 
-  route :get, :post, '/' do
+  get '/' do
+    redirect to('https://www.tortus.com/')
+  end
+
+  post '/' do
     request.body.rewind
     raw_text = request.body.read
 
+    if raw_text.empty?
+      return 422
+    end
+
     report = Report.find_or_new_by_request_body(raw_text)
+    unless report.valid?
+      return 422
+    end
 
     if report.new?
       report.save
