@@ -2,19 +2,6 @@
   'use strict';
   $(document).foundation();
 
-  $('a[data-method="delete"]').on('click', function (event) {
-    event.preventDefault();
-    $.ajax(this.href, {
-      method: 'DELETE',
-      success: function (data, textStatus, jqXHR) {
-        console.log(data);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log(errorThrown);
-      }
-    });
-  });
-
   $('.send-test-report').on('click', function (event) {
     event.preventDefault();
     $.ajax('/', {

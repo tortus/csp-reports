@@ -18,13 +18,6 @@ class AdminController < Sinatra::Base
     erb :domain
   end
 
-  delete '/domains/:domain' do
-    @domain = params[:domain].to_s
-    logger.info "DELETING DOMAIN: #{@domain}"
-    Report.domain(@domain).delete
-    redirect to('/')
-  end
-
   get '/reports/:id' do
     @report = Report.first(id: params[:id])
     @domain = @report.domain

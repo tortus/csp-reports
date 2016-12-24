@@ -43,8 +43,6 @@
                 <td><%= h domain.count %></td>
                 <td style="width: 25%">
                   <a href="<%= h domain_path(domain) %>">View Reports</a>
-                  |
-                  <a href="<%= h domain_path(domain) %>" data-method="delete" onclick="return confirm('Are you sure you want to delete all CSP violation reports for this domain? This action cannot be undone.');">Delete Domain</a>
                 </td>
               </tr>
             <% end %>
