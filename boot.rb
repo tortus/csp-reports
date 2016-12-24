@@ -8,6 +8,24 @@ require 'data_mapper'
 require 'digest'
 require 'digest/bubblebabble'
 
+unless ''.respond_to?(:truncate)
+  class String
+    def truncate(truncate_at, options = {})
+      return dup unless length > truncate_at
+
+      omission = options[:omission] || '...'
+      length_with_room_for_omission = truncate_at - omission.length
+      stop =        if options[:separator]
+        rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
+      else
+        length_with_room_for_omission
+      end
+
+      "#{self[0, stop]}#{omission}"
+    end
+  end
+end
+
 module CSPReports
   def self.root
     @_root ||= File.expand_path('..', __FILE__)

@@ -47,9 +47,9 @@
               <% @reports.each do |report| %>
                 <tr>
                   <td><%= report.count %></td>
-                  <td><%= h report.document_uri %></td>
-                  <td><%= h report.blocked_uri %></td>
-                  <td><%= h report.violated_directive %></td>
+                  <td><%= h report.document_uri.truncate(50) %></td>
+                  <td><%= h report.blocked_uri.truncate(50) %></td>
+                  <td><%= h report.violated_directive.truncate(50) %></td>
                   <td><a href="<%= h report_path(report) %>">View Details</a></td>
                 </tr>
               <% end %>
