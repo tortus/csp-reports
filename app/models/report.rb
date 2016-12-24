@@ -53,4 +53,8 @@ class Report
       self.blocked_uri        = report['blocked-uri']
     end
   end
+
+  def self.domain(domain)
+    all(domain: domain)
+  end
 end

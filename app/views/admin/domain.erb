@@ -1,0 +1,49 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Tortus CSP Reports Admin</h1>
+        <h2><%= h @domain %></h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <table class="hover">
+          <thead>
+            <tr>
+              <th>URI</th>
+              <th>Blocked URI</th>
+              <th>Violated Directive</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @reports.each do |report| %>
+              <tr>
+                <td><%= h report.document_uri %></td>
+                <td><%= h report.blocked_ur %></td>
+                <td><%= h report.violated_directive %></td>
+                <td><a href="/admin/reports/<%= h report.id %>">View Details</a></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

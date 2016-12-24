@@ -1,5 +1,7 @@
 class AdminController < Sinatra::Base
 
+  helpers AdminHelper
+
   set :views, CSPReports.root + '/app/views/admin'
 
   provides 'html'
@@ -10,7 +12,8 @@ class AdminController < Sinatra::Base
   end
 
   get '/domains/:domain' do
-    @reports = Report.where(domain: params[:domain]).all
+    @domain = params[:domain]
+    @reports = Report.domain(domain: params[:domain])
     erb :domain
   end
 
