@@ -1,7 +1,7 @@
 class Domain
 
   def self.all
-    sql = 'select domain, count(*) from reports group by domain'
+    sql = 'SELECT domain, SUM(count) AS count FROM reports GROUP BY domain'
     records = DataMapper.repository.adapter.select(sql)
   end
 

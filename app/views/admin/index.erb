@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    <title>Tortus CSP Reports Admin</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
   </head>
@@ -16,12 +16,23 @@
     </div>
 
     <div class="row">
+      <div class="larg-12 columns">
+        <nav aria-label="You are here:" role="navigation">
+          <ul class="breadcrumbs">
+            <li><span class="show-for-sr">Current: </span>Domains</li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="large-12 columns">
+        <p><a class="button send-test-report">Send Test Report</a></p>
         <table class="hover">
           <thead>
             <tr>
               <th>Domain</th>
-              <th>Violation Count</th>
+              <th>Total Reports</th>
               <th></th>
             </tr>
           </thead>
@@ -30,7 +41,11 @@
               <tr>
                 <td><%= h domain.domain %></td>
                 <td><%= h domain.count %></td>
-                <td><a href="/admin/domains/<%= h domain.domain %>">View Details</a></td>
+                <td style="width: 25%">
+                  <a href="<%= h domain_path(domain) %>">View Reports</a>
+                  |
+                  <a href="<%= h domain_path(domain) %>" data-method="delete" onclick="return confirm('Are you sure you want to delete all CSP violation reports for this domain? This action cannot be undone.');">Delete Domain</a>
+                </td>
               </tr>
             <% end %>
           </tbody>

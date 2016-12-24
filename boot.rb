@@ -18,12 +18,13 @@ module CSPReports
   end
 
   def self.env
-    @_env ||= ENV.fetch('RACK_ENV') { 'development' }
+    @_env ||= ENV.fetch('RACK_ENV') { :development }.to_sym
   end
 end
 
 db = CSPReports.config.fetch('database')
 
+DataMapper::Logger.new(STDOUT, CSPReports.env == :development ? :debug : :info)
 DataMapper.setup(:default, "postgres://#{db.fetch('username')}:#{db.fetch('password')}@#{db.fetch('host')}/#{db.fetch('schema')}")
 DataMapper::Model.raise_on_save_failure = true
 

@@ -1,6 +1,8 @@
 class ReportsController < Sinatra::Base
   register Sinatra::MultiRoute
 
+  enable :logging
+
   route :get, :post, '/' do
     request.body.rewind
     raw_text = request.body.read
@@ -13,11 +15,11 @@ class ReportsController < Sinatra::Base
 
       if CSPReports.config['notifications']['enabled']
         Pony.mail(
-         :to => settings.notifications['recipients'],
-         :from => settings.notifications['sender'],
-         :subject => 'CSP violation',
-         :body => report.formatted_body_json
-         )
+          :to => settings.notifications['recipients'],
+          :from => settings.notifications['sender'],
+          :subject => 'CSP violation',
+          :body => report.formatted_body_json
+        )
       end
     else
       report.count += 1

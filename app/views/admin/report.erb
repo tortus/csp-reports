@@ -1,0 +1,69 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= h @domain %> CSP Report</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>"<%=h @domain %>" CSP Report #<%=h @report.id %></h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="larg-12 columns">
+        <nav aria-label="You are here:" role="navigation">
+          <ul class="breadcrumbs">
+            <li><a href="<%= h url('/') %>">Domains</a></li>
+            <li><a href="<%= h domain_path(@domain) %>"><%= h @domain %></a></li>
+            <li>
+              <span class="show-for-sr">Current: </span>Report #<%= h @report.id %>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Count</th><th>SHA-256</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= h @report.id %></td>
+              <td><%= h @report.count %></td>
+              <td><%= h @report.sha256 %></td>
+            </tr>
+          </tbody>
+        </table>
+        <h4>Document URI</h4>
+        <p><%= h @report.document_uri %></p>
+        <h4>Blocked URI</h4>
+        <p><%= h @report.blocked_uri %></p>
+        <h4>Referrer</h4>
+        <p><%= h @report.referrer %></p>
+        <h4>Violated Directive</h4>
+        <p><%= h @report.violated_directive %></p>
+        <h4>Original Policy</h4>
+        <p><%= h @report.original_policy %></p>
+        <h4>Body</h4>
+        <pre><%= h @report.formatted_body_json %></pre>
+        <br>
+      </div>
+    </div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

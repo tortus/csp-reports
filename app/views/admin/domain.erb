@@ -4,40 +4,58 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    <title><%= h @domain %> CSP Reports</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
   </head>
   <body>
     <div class="row">
       <div class="large-12 columns">
-        <h1>Tortus CSP Reports Admin</h1>
-        <h2><%= h @domain %></h2>
+        <h1>"<%=h @domain %>" CSP Reports</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="larg-12 columns">
+        <nav aria-label="You are here:" role="navigation">
+          <ul class="breadcrumbs">
+            <li><a href="/admin">Domains</a></li>
+            <li>
+              <span class="show-for-sr">Current: </span><%= h @domain %>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
 
     <div class="row">
       <div class="large-12 columns">
-        <table class="hover">
-          <thead>
-            <tr>
-              <th>URI</th>
-              <th>Blocked URI</th>
-              <th>Violated Directive</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @reports.each do |report| %>
+        <% if @reports.empty? %>
+          <h3>There are no CSP violation reports for this domain.</h3>
+        <% else %>
+          <table class="hover">
+            <thead>
               <tr>
-                <td><%= h report.document_uri %></td>
-                <td><%= h report.blocked_ur %></td>
-                <td><%= h report.violated_directive %></td>
-                <td><a href="/admin/reports/<%= h report.id %>">View Details</a></td>
+                <th>Count</th>
+                <th>Document URI</th>
+                <th>Blocked URI</th>
+                <th>Violated Directive</th>
+                <th></th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <% @reports.each do |report| %>
+                <tr>
+                  <td><%= report.count %></td>
+                  <td><%= h report.document_uri %></td>
+                  <td><%= h report.blocked_uri %></td>
+                  <td><%= h report.violated_directive %></td>
+                  <td><a href="<%= h report_path(report) %>">View Details</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
       </div>
     </div>
 
