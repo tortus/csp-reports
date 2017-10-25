@@ -25,9 +25,15 @@ class AdminController < ApplicationController
   end
 
   get '/reports/:id' do
-    @report = Report[params[:id]]
+    id = params[:id]
+    return 404 unless id.match?(/\A\d+\z/)
+    @report = Report[id.to_i]
     return 404 unless @report
     @domain = @report.domain
     erb :report
+  end
+
+  not_found do
+    send_file "#{CSPReports.root}/public/404.html"
   end
 end
