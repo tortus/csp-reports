@@ -43,7 +43,13 @@ class Report
     sha256 = Digest::SHA256.bubblebabble(raw_text)
     report = first(sha256: sha256)
     if !report
-      report = new(sha256: sha256, raw_json: raw_text, first_occurrence: Time.now.utc)
+      timestamp = Time.now.utc
+      report = new(
+        sha256: sha256,
+        raw_json: raw_text,
+        first_occurrence: timestamp,
+        last_occurrence: timestamp
+      )
     end
     report
   end

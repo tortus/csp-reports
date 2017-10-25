@@ -17,7 +17,7 @@ class AdminController < Sinatra::Base
     @domain = params[:domain].to_s
     logger.info "DOMAIN: #{@domain}"
     @reports = Report.domain(@domain).all(
-      order: [:last_ocurrence, :count.desc, :blocked_uri, :document_uri],
+      order: [:last_occurrence, :count.desc, :blocked_uri, :document_uri],
       limit: 500
     )
     erb :domain
