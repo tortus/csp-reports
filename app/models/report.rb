@@ -40,12 +40,12 @@ class Report < Sequel::Model
     unless report
       timestamp = Time.now.utc
       report = new(
-        sha256: sha256,
         raw_json: raw_text,
         count: 1,
         first_occurrence: timestamp,
         last_occurrence: timestamp
       )
+      report.sha256 = sha256
     end
     report
   end
