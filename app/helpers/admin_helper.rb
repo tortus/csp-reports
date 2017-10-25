@@ -16,4 +16,8 @@ module AdminHelper
     end
   end
 
+  def report_timestamp(report)
+    return unless report && report.last_occurrence
+    report.last_occurrence.strftime('%a %m/%d/%Y %-l:%M %p')
+  end
 end
