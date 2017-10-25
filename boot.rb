@@ -1,5 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/multi_route'
+require 'sinatra/custom_logger'
+require 'logger'
 require 'yaml'
 require 'erb'
 require 'json'
