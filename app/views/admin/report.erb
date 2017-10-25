@@ -44,7 +44,7 @@
             <tr>
               <td><%= h @report.id %></td>
               <td><%= h @report.count %></td>
-              <td><%= h @report.last_occurrence.strftime('%a %m/%d/%Y %-l:%M %p') %></td>
+              <td><%= @report.last_occurrence ? h(@report.last_occurrence.strftime('%a %m/%d/%Y %-l:%M %p')) : '' %></td>
               <td><%= h @report.sha256 %></td>
             </tr>
           </tbody>
