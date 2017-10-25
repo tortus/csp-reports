@@ -1,4 +1,6 @@
-# /admin
+# frozen_string_literal: true
+#
+# URL: /admin
 class AdminController < Sinatra::Base
   helpers AdminHelper
 
@@ -7,7 +9,7 @@ class AdminController < Sinatra::Base
   provides 'html'
 
   get '/' do
-    @domains = Domain.all
+    @domains = Domain.by_most_frequent
     erb :index
   end
 

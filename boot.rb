@@ -17,7 +17,7 @@ unless ''.respond_to?(:truncate)
 
       omission = options[:omission] || '...'
       length_with_room_for_omission = truncate_at - omission.length
-      stop =        if options[:separator]
+      stop = if options[:separator]
         rindex(options[:separator], length_with_room_for_omission) || length_with_room_for_omission
       else
         length_with_room_for_omission
@@ -77,4 +77,6 @@ rescue Sequel::DatabaseError
 end
 
 # load all helpers and controllers
-Dir.glob(File.expand_path('../app/{helpers,controllers}/*.rb', __FILE__)).each { |file| require file }
+Dir.glob(File.expand_path('../app/{helpers,controllers}/*.rb', __FILE__)).each do |file|
+  require file
+end

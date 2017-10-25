@@ -1,4 +1,10 @@
 # frozen_string_literal: true
+#
 # Not really a model, just a view of reports
-class Domain < Sequel::Model(CSPReports.db['SELECT domain, SUM(count) AS count FROM reports GROUP BY domain ORDER BY count DESC'])
+class Domain < Sequel::Model
+  dataset_module do
+    def by_most_frequent
+      order(Sequel.desc(:count))
+    end
+  end
 end

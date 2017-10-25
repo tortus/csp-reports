@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+#
 # Usage in Sinatra:
 #
 #     request.body.rewind
