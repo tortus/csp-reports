@@ -16,8 +16,10 @@ module AdminHelper
     end
   end
 
+  # Convert a report's last_occurrence to the local time zone and format it
   def report_timestamp(report)
-    return unless report && report.last_occurrence
-    report.last_occurrence.strftime('%a %m/%d/%Y %-l:%M %p')
+    return unless report &. last_occurrence
+    tz = CSPReports.time_zone
+    tz.utc_to_local(report.last_occurrence).strftime(CSPReports.timestamp_format)
   end
 end

@@ -19,21 +19,14 @@
 # TODO: Add ability to mark report as "resolved".
 #
 # TODO: Switch to Sequel or ActiveRecord, because this is awful.
-class Report
-  include DataMapper::Resource
+class Report < Sequel::Model
+  plugin :validation_helpers
 
-  property :id, Serial
-  property :sha256, Text, key: true
-  property :body, Text, required: true
-  property :count, Integer, default: 1, min: 1, required: true
-  property :domain, Text
-  property :document_uri, Text
-  property :referrer, Text
-  property :violated_directive, Text
-  property :original_policy, Text
-  property :blocked_uri, Text
-  property :first_occurrence, DateTime
-  property :last_occurrence, DateTime
+  def validate
+    super
+    validates_presence [:sha256, :body]
+    errors.add(:count, 'must be greater than or equal to 1') if count && count < 1
+  end
 
   def formatted_body_json
     @formatted_json ||= JSON.pretty_generate(JSON.parse(body))
@@ -41,12 +34,13 @@ class Report
 
   def self.find_or_new_by_request_body(raw_text)
     sha256 = Digest::SHA256.bubblebabble(raw_text)
-    report = first(sha256: sha256)
+    report = dataset.sha256(sha256).first
     unless report
       timestamp = Time.now.utc
       report = new(
         sha256: sha256,
         raw_json: raw_text,
+        count: 1,
         first_occurrence: timestamp,
         last_occurrence: timestamp
       )
@@ -71,10 +65,16 @@ class Report
   def increment!
     self.count += 1
     self.last_occurrence = Time.now.utc
-    save!
+    save(raise_on_failure: true)
   end
 
-  def self.domain(domain)
-    all(domain: domain)
+  dataset_module do
+    def domain(domain)
+      where(domain: domain.to_s)
+    end
+
+    def sha256(sha256)
+      where(sha256: sha256.to_s)
+    end
   end
 end

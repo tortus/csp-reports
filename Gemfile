@@ -1,8 +1,13 @@
 source 'https://rubygems.org'
 
+gem 'pg'
+gem 'pony'
+gem 'rake'
+gem 'sequel'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'pony'
-gem 'data_mapper'
-gem 'dm-postgres-adapter'
-gem 'rake'
+gem 'tzinfo'
+
+group :development do
+  gem 'pry'
+end

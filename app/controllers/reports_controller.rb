@@ -10,14 +10,10 @@ class ReportsController < Sinatra::Base
     request.body.rewind
     raw_text = request.body.read
 
-    if raw_text.empty?
-      return 422
-    end
+    return 422 if raw_text.empty?
 
     report = Report.find_or_new_by_request_body(raw_text)
-    unless report.valid?
-      return 422
-    end
+    return 422 unless report.valid?
 
     if report.new?
       report.save
@@ -25,10 +21,10 @@ class ReportsController < Sinatra::Base
 
       if CSPReports.config['notifications']['enabled']
         Pony.mail(
-          :to => settings.notifications['recipients'],
-          :from => settings.notifications['sender'],
-          :subject => 'CSP violation',
-          :body => report.formatted_body_json
+          to: settings.notifications['recipients'],
+          from: settings.notifications['sender'],
+          subject: 'CSP violation',
+          body: report.formatted_body_json
         )
       end
     else

@@ -1,3 +1,5 @@
+time_zone: 'America/New_York'
+
 database:
   schema: csp_reports
   username:
