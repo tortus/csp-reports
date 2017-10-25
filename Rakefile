@@ -18,7 +18,7 @@ namespace :db do
         column :sha256, :text, null: false, index: true
         column :body, :text, null: false
         column :count, :integer, default: 1, null: false
-        column :domain, :text
+        column :domain, :text, index: true
         column :document_uri, :text
         column :referrer, :text
         column :violated_directive, :text
@@ -31,6 +31,9 @@ namespace :db do
       CSPReports.db.run("ALTER TABLE reports ALTER COLUMN id SET DEFAULT nextval('reports_id_seq'::regclass);")
     end
     CSPReports.db.run("CREATE OR REPLACE VIEW domains (domain, count) AS (SELECT domain, SUM(count) AS count FROM reports GROUP BY domain)")
+    CSPReports.db.alter_table(:reports) do
+      add_index :domain
+    end
   end
 
   desc 'Drop database'
