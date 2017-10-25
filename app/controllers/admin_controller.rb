@@ -1,5 +1,5 @@
+# /admin
 class AdminController < Sinatra::Base
-
   helpers AdminHelper
 
   enable :logging
@@ -16,7 +16,10 @@ class AdminController < Sinatra::Base
   get '/domains/:domain' do
     @domain = params[:domain].to_s
     logger.info "DOMAIN: #{@domain}"
-    @reports = Report.domain(@domain).all(order: [:count.desc, :blocked_uri, :document_uri])
+    @reports = Report.domain(@domain).all(
+      order: [:count.desc, :blocked_uri, :document_uri],
+      limit: 1000
+    )
     erb :domain
   end
 
@@ -26,5 +29,4 @@ class AdminController < Sinatra::Base
     @domain = @report.domain
     erb :report
   end
-
 end

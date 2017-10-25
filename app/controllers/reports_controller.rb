@@ -1,5 +1,5 @@
+# /
 class ReportsController < Sinatra::Base
-
   enable :logging
 
   get '/' do
@@ -32,13 +32,11 @@ class ReportsController < Sinatra::Base
         )
       end
     else
-      report.count += 1
-      report.save
+      report.increment!
       logger.info "Registered new occurrence of problem #{report.sha256} Count: #{report.count}"
     end
 
     status 204
     body nil
   end
-
 end

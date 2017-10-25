@@ -26,6 +26,7 @@ unless ''.respond_to?(:truncate)
   end
 end
 
+# Base configuration module
 module CSPReports
   def self.root
     @_root ||= File.expand_path('..', __FILE__)

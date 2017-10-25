@@ -40,6 +40,7 @@
                 <th>Document URI</th>
                 <th>Blocked URI</th>
                 <th>Violated Directive</th>
+                <th>Last Occurrence</th>
                 <th></th>
               </tr>
             </thead>
@@ -50,6 +51,7 @@
                   <td><%= h report.document_uri.truncate(50) %></td>
                   <td><%= h report.blocked_uri.truncate(50) %></td>
                   <td><%= h report.violated_directive.truncate(50) %></td>
+                  <td><%= report.last_occurrence %></td>
                   <td><a href="<%= h report_path(report) %>">View Details</a></td>
                 </tr>
               <% end %>

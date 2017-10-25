@@ -32,6 +32,8 @@ class Report
   property :violated_directive, Text
   property :original_policy, Text
   property :blocked_uri, Text
+  property :first_occurrence, DateTime
+  property :last_occurrence, DateTime
 
   def formatted_body_json
     @formatted_json ||= JSON.pretty_generate(JSON.parse(body))
@@ -41,7 +43,7 @@ class Report
     sha256 = Digest::SHA256.bubblebabble(raw_text)
     report = first(sha256: sha256)
     if !report
-      report = new(sha256: sha256, raw_json: raw_text)
+      report = new(sha256: sha256, raw_json: raw_text, first_occurrence: Time.now.utc)
     end
     report
   end
@@ -58,6 +60,12 @@ class Report
       self.original_policy    = report['original-policy']
       self.blocked_uri        = report['blocked-uri']
     end
+  end
+
+  def increment!
+    self.count += 1
+    self.last_occurrence = Time.now.utc
+    save!
   end
 
   def self.domain(domain)
