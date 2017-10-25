@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-#
+require_relative 'application_controller'
+
 # URL: /admin
-class AdminController < Sinatra::Base
+class AdminController < ApplicationController
   helpers AdminHelper
 
-  enable :logging
   set :views, CSPReports.root + '/app/views/admin'
   provides 'html'
 

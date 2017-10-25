@@ -1,7 +1,8 @@
-# /
-class ReportsController < Sinatra::Base
-  enable :logging
+# frozen_string_literal: true
+require_relative 'application_controller'
 
+# /
+class ReportsController < ApplicationController
   get '/' do
     redirect to('https://www.tortus.com/')
   end
