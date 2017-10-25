@@ -42,7 +42,7 @@ class Report
   def self.find_or_new_by_request_body(raw_text)
     sha256 = Digest::SHA256.bubblebabble(raw_text)
     report = first(sha256: sha256)
-    if !report
+    unless report
       timestamp = Time.now.utc
       report = new(
         sha256: sha256,
