@@ -63,7 +63,7 @@ end
 db_url = CSPReports.config.fetch('database_url', nil)
 unless db_url
   db = CSPReports.config.fetch('database')
-  db_url = "postgres://#{db.fetch('username')}:#{db.fetch('password')}@#{db.fetch('host')}/#{db.fetch('schema')}"
+  db_url = "postgres://#{URI.encode(db.fetch('username'))}:#{URI.encode(db.fetch('password'))}@#{db.fetch('host')}/#{db.fetch('schema')}"
 end
 CSPReports.db = Sequel.connect(db_url)
 
