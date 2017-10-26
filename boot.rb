@@ -32,32 +32,44 @@ end
 
 # Base root configuration module
 module CSPReports
-  def self.root
-    @_root ||= File.expand_path('..', __FILE__).freeze
-  end
-
-  def self.config
-    @_config ||= YAML.safe_load(
-      ERB.new(
-        File.read(File.join(root, 'config', 'config.yml'))
-      ).result
-    ).freeze
-  end
-
-  def self.env
-    @_env ||= ENV.fetch('RACK_ENV') { :development }.to_sym
-  end
-
-  def self.time_zone
-    @_tz ||= TZInfo::Timezone.get(config.fetch('time_zone'))
-  end
-
-  def self.timestamp_format
-    '%a %b %-d %Y %-l:%M %p'.freeze
-  end
-
   class << self
+    def root
+      @_root ||= File.expand_path('..', __FILE__).freeze
+    end
+
+    def config
+      @_config ||= YAML.safe_load(
+        ERB.new(
+          File.read(File.join(root, 'config', 'config.yml'))
+        ).result
+      ).freeze
+    end
+
+    def env
+      @_env ||= ENV.fetch('RACK_ENV') { :development }.to_sym
+    end
+
+    attr_writer :time_zone
+
+    def time_zone
+      @time_zone ||= TZInfo::Timezone.get(config.fetch('time_zone'))
+    end
+
+    def timestamp_format
+      '%a %b %-d %Y %-l:%M %p'.freeze
+    end
+
     attr_accessor :db
+
+    attr_writer :logger
+
+    def logger
+      unless @logger
+        @logger = Logger.new(File.open("#{CSPReports.root}/log/#{env}.log", 'a'))
+        @logger.level = Logger::DEBUG if env == :development
+      end
+      @logger
+    end
   end
 end
 
@@ -81,8 +93,7 @@ rescue Sequel::DatabaseError
 end
 
 # load all helpers and controllers
+require_relative 'app/helpers/admin_helper'
 require_relative 'app/controllers/application_controller'
-Dir.glob(File.expand_path('../app/{helpers,controllers}/*.rb', __FILE__)).each do |file|
-  next if file.match?(/application_controller\.rb\z/)
-  require file
-end
+require_relative 'app/controllers/reports_controller'
+require_relative 'app/controllers/admin_controller'
