@@ -6,6 +6,13 @@ using sendmail (via Pony gem). Easy to deploy with Passenger,
 or any other Rack app container. Currently requires PostgreSQL,
 but could easily replace with any other database.
 
+It attempts to coalesce duplicate reports using SHA-256 hashes
+of the report body, since hundreds of visits to a site's
+homepage will generate many of the exact same report. This serves as
+a basic sanity check, but more could definitely be done to coalesce
+reports that are about the same fundamental issue, and I'm not
+sure how the hashing and JSON parsing will hold up under load.
+
 ## Setup
 
 1. Create a PostgreSQL database to use with the app.
