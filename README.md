@@ -1,10 +1,11 @@
 # Content Security Policy (CSP) Violation Report Handler
 
 Tiny Sinatra application to parse CSP violation reports,
-format them nicely, and forward them on to an email address
-using sendmail (via Pony gem). Easy to deploy with Passenger,
+save them to database, and optionally forward them on to an email
+address using sendmail (via Pony gem). Easy to deploy with Passenger,
 or any other Rack app container. Currently requires PostgreSQL,
-but could easily replace with any other database.
+but another database could probably be used by editing the schema
+creation SQL in Rakefile.
 
 It attempts to coalesce duplicate reports using SHA-256 hashes
 of the report body, since hundreds of visits to a site's
