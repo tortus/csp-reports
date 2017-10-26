@@ -30,6 +30,7 @@ class AdminController < ApplicationController
     logger.info "REPORT ID: #{id}"
     return 404 unless id.match?(/\A\d+\z/)
     @report = Report[id.to_i]
+    logger.debug "REPORT: #{@report.inspect}"
     return 404 unless @report
     @domain = @report.domain
     erb :report
