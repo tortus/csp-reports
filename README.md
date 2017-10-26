@@ -3,7 +3,7 @@
 Tiny Sinatra application to parse CSP violation reports,
 format them nicely, and forward them on to an email address
 using sendmail (via Pony gem). Easy to deploy with Passenger,
-or any other app container. Currently requires PostgreSQL,
+or any other Rack app container. Currently requires PostgreSQL,
 but could easily replace with any other database.
 
 ## Setup
@@ -11,7 +11,7 @@ but could easily replace with any other database.
 1. Create a PostgreSQL database to use with the app.
 2. Save a copy of __config/config.sample.yml__ as __config/config.yml__.
 3. Edit config/config.yml wih the settings that make sense for you.
-4. Run: ```MIGRATE=true bundle exec ruby boot.rb```
+4. Run: ```bundle exec rake db:create```
 
 Finally, run rackup:
 
