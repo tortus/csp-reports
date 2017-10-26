@@ -26,6 +26,15 @@ Finally, run rackup if you want to start a development server:
 
     bundle exec rackup
 
+### Environments
+
+Passenger and rack care about the __RACK\_ENV__ environment variable, and Sinatra cares about
+__APP\_ENV__. To resolve the confusion, we just copy __RACK\_ENV__ to __APP\_ENV__ on boot, or vice versa depending which one you care to set.
+
+* In __development__ mode, static assets will be served, and SQL statements will be logged.
+* In __production__ mode, static assets are handled by the web server, and no SQL is logged.
+* __test__ mode is currently not used.
+
 ### Multiple Recipients
 
 The "recipients" option in config.yml is passed as-is to sendmail
