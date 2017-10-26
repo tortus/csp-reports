@@ -83,7 +83,7 @@ unless db_url
   passwd = CGI.escape(db.fetch('password') || '')
   db_url = "postgres://#{username}:#{passwd}@#{db.fetch('host')}/#{db.fetch('schema')}"
 end
-CSPReports.db = Sequel.connect(db_url)
+CSPReports.db = Sequel.connect(db_url, logger: CSPReports.logger)
 
 # load models
 begin
