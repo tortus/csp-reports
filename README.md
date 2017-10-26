@@ -10,10 +10,11 @@ but could easily replace with any other database.
 
 1. Create a PostgreSQL database to use with the app.
 2. Save a copy of __config/config.sample.yml__ as __config/config.yml__.
-3. Edit config/config.yml wih the settings that make sense for you.
-4. Run: ```bundle exec rake db:create```
+3. Edit __config/config.yml__ wih the settings that make sense for you.
+4. Install gems: ```bundle install```
+5. Create the database: ```bundle exec rake db:create```
 
-Finally, run rackup:
+Finally, run rackup if you want to start a development server:
 
     bundle exec rackup
 
