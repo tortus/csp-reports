@@ -3,17 +3,25 @@
 Tiny Sinatra application to parse CSP violation reports,
 format them nicely, and forward them on to an email address
 using sendmail (via Pony gem). Easy to deploy with Passenger,
-or any other app container. Currently requires PostgreSQL,
+or any other Rack app container. Currently requires PostgreSQL,
 but could easily replace with any other database.
+
+It attempts to coalesce duplicate reports using SHA-256 hashes
+of the report body, since hundreds of visits to a site's
+homepage will generate many of the exact same report. This serves as
+a basic sanity check, but more could definitely be done to coalesce
+reports that are about the same fundamental issue, and I'm not
+sure how the hashing and JSON parsing will hold up under load.
 
 ## Setup
 
 1. Create a PostgreSQL database to use with the app.
 2. Save a copy of __config/config.sample.yml__ as __config/config.yml__.
-3. Edit config/config.yml wih the settings that make sense for you.
-4. Run: ```MIGRATE=true bundle exec ruby boot.rb```
+3. Edit __config/config.yml__ wih the settings that make sense for you.
+4. Install gems: ```bundle install```
+5. Create the database: ```bundle exec rake db:create```
 
-Finally, run rackup:
+Finally, run rackup if you want to start a development server:
 
     bundle exec rackup
 
@@ -22,6 +30,12 @@ Finally, run rackup:
 
 The "recipients" option in config.yml is passed as-is to sendmail
 (via Pony), so just separate multiple recipients with commas.
+
+### Administration Security
+
+There is no security on the admin site. I recommend setting up a
+password for /admin in your web server, or limiting it to a certain
+IP range.
 
 ## Testing
 
