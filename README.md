@@ -26,7 +26,6 @@ Finally, run rackup if you want to start a development server:
 
     bundle exec rackup
 
-
 ### Multiple Recipients
 
 The "recipients" option in config.yml is passed as-is to sendmail

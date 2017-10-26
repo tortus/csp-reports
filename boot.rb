@@ -79,7 +79,8 @@ module CSPReports
   end
 end
 
-puts "Booting in '#{CSPReports.env}' mode"
+puts "APP_ENV: #{ENV['APP_ENV']}"
+puts "RACK_ENV: #{ENV['RACK_ENV']}"
 
 # Create the database connection
 db_url = CSPReports.config.fetch('database_url', nil)
