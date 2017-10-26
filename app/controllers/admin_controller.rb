@@ -8,6 +8,7 @@ class AdminController < ApplicationController
   provides 'html'
 
   get '/' do
+    logger.info 'LIST DOMAINS'
     @domains = Domain.by_most_frequent
     erb :index
   end
@@ -15,7 +16,7 @@ class AdminController < ApplicationController
   # TODO: paginate results
   # TODO: add search
   get '/domains/:domain' do
-    logger.info "REPORT domain: #{params[:domain]}"
+    logger.info "FETCH REPORTS FOR DOMAIN: #{params[:domain]}"
     @domain = params[:domain].to_s
     @reports = Report.domain(@domain)
                      .order(:last_occurrence, Sequel.desc(:count), :id)
@@ -25,10 +26,9 @@ class AdminController < ApplicationController
 
   get '/reports/:id' do
     id = params[:id]
-    logger.info "FETCHING REPORT ID: #{id}"
+    logger.info "FETCH REPORT ID: #{id}"
     return 404 unless id.match?(/\A\d+\z/)
     @report = Report[id.to_i]
-    logger.debug "REPORT: #{@report.inspect}"
     return 404 unless @report
     @domain = @report.domain
     erb :report
