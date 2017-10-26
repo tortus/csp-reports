@@ -8,7 +8,6 @@ class AdminController < ApplicationController
   provides 'html'
 
   get '/' do
-    logger.info "GET /admin"
     @domains = Domain.by_most_frequent
     erb :index
   end
@@ -18,7 +17,6 @@ class AdminController < ApplicationController
   get '/domains/:domain' do
     logger.info "REPORT domain: #{params[:domain]}"
     @domain = params[:domain].to_s
-    logger.info "DOMAIN: #{@domain}"
     @reports = Report.domain(@domain)
                      .order(:last_occurrence, Sequel.desc(:count), :id)
                      .limit(500) # sanity so the server doesn't crash
@@ -27,7 +25,7 @@ class AdminController < ApplicationController
 
   get '/reports/:id' do
     id = params[:id]
-    logger.info "REPORT ID: #{id}"
+    logger.info "FETCHING REPORT ID: #{id}"
     return 404 unless id.match?(/\A\d+\z/)
     @report = Report[id.to_i]
     logger.debug "REPORT: #{@report.inspect}"

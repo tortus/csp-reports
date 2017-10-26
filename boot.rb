@@ -46,7 +46,7 @@ module CSPReports
     end
 
     def env
-      @_env ||= ENV.fetch('RACK_ENV') { :development }.to_sym
+      @_env ||= ENV.fetch('APP_ENV') { :development }.to_sym
     end
 
     attr_writer :time_zone
@@ -68,12 +68,18 @@ module CSPReports
         file = File.open("#{CSPReports.root}/log/#{env}.log", 'a')
         file.sync = true
         @logger = Logger.new(file)
-        @logger.level = Logger::DEBUG if env == :development
+        if env == :production
+          @logger.level = Logger::INFO
+        else
+          @logger.level = Logger::DEBUG
+        end
       end
       @logger
     end
   end
 end
+
+puts "Booting in '#{CSPReports.env}' mode"
 
 # Create the database connection
 db_url = CSPReports.config.fetch('database_url', nil)
@@ -83,7 +89,7 @@ unless db_url
   passwd = CGI.escape(db.fetch('password') || '')
   db_url = "postgres://#{username}:#{passwd}@#{db.fetch('host')}/#{db.fetch('schema')}"
 end
-CSPReports.db = Sequel.connect(db_url, logger: CSPReports.logger)
+CSPReports.db = Sequel.connect(db_url, logger: (CSPReports.logger unless CSPReports.env == :production))
 
 # load models
 begin
