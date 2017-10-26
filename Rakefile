@@ -7,15 +7,15 @@ RDoc::Task.new do |rdoc|
 end
 
 namespace :db do
-  desc 'Run migrations: WARNING: destructive'
-  task :migrate do
+  desc 'Create the schema: WARNING: destructive'
+  task :create do
     require_relative 'boot'
-    puts "Migrating database..."
+    puts "Creating database..."
 
     unless CSPReports.db.table_exists?(:reports)
       CSPReports.db.create_table(:reports) do
         primary_key :id, type: :bigint
-        column :sha256, :text, null: false, index: true
+        column :sha256, :text, null: false, unique: true
         column :body, :text, null: false
         column :count, :integer, default: 1, null: false
         column :domain, :text, index: true
@@ -31,17 +31,17 @@ namespace :db do
       CSPReports.db.run("ALTER TABLE reports ALTER COLUMN id SET DEFAULT nextval('reports_id_seq'::regclass);")
     end
     CSPReports.db.run("CREATE OR REPLACE VIEW domains (domain, count) AS (SELECT domain, SUM(count) AS count FROM reports GROUP BY domain)")
-    CSPReports.db.alter_table(:reports) do
-      add_index :domain
-    end
   end
 
   desc 'Drop database'
   task :drop do
     require_relative 'boot'
-    puts "Dropping all tables..."
+    puts "Dropping all tables and views..."
+    CSPReports.db.run('DROP VIEW domains;')
     CSPReports.db.drop_table?(:reports)
     CSPReports.db.run('DROP SEQUENCE reports_id_seq;')
-    CSPReports.db.run('DROP VIEW domains;')
   end
+
+  desc 'Drop and re-create database'
+  task :re_create => [:drop, :create]
 end
