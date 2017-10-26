@@ -37,6 +37,6 @@ class AdminController < ApplicationController
   end
 
   not_found do
-    send_file "#{CSPReports.root}/public/404.html"
+    send_file "#{CSPReports.root}/public/404.html", status: 404
   end
 end
