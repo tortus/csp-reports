@@ -1,11 +1,10 @@
 # frozen_string_literal: true
-require_relative 'application_controller'
 
 # URL: /admin
 class AdminController < ApplicationController
   helpers AdminHelper
 
-  set :views, CSPReports.root + '/app/views/admin'
+  set :views, "#{CSPReports.root}/app/views/admin"
   provides 'html'
 
   get '/' do
