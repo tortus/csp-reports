@@ -81,6 +81,8 @@ rescue Sequel::DatabaseError
 end
 
 # load all helpers and controllers
+require_relative 'app/controllers/application_controller'
 Dir.glob(File.expand_path('../app/{helpers,controllers}/*.rb', __FILE__)).each do |file|
+  next if file.match?(/application_controller\.rb\z/)
   require file
 end
