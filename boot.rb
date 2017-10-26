@@ -65,7 +65,9 @@ module CSPReports
 
     def logger
       unless @logger
-        @logger = Logger.new(File.open("#{CSPReports.root}/log/#{env}.log", 'a'))
+        file = File.open("#{CSPReports.root}/log/#{env}.log", 'a')
+        file.sync = true
+        @logger = Logger.new(file)
         @logger.level = Logger::DEBUG if env == :development
       end
       @logger
