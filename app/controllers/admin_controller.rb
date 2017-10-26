@@ -9,6 +9,7 @@ class AdminController < ApplicationController
   provides 'html'
 
   get '/' do
+    logger.info "GET /admin"
     @domains = Domain.by_most_frequent
     erb :index
   end
@@ -16,6 +17,7 @@ class AdminController < ApplicationController
   # TODO: paginate results
   # TODO: add search
   get '/domains/:domain' do
+    logger.info "REPORT domain: #{params[:domain]}"
     @domain = params[:domain].to_s
     logger.info "DOMAIN: #{@domain}"
     @reports = Report.domain(@domain)
@@ -26,6 +28,7 @@ class AdminController < ApplicationController
 
   get '/reports/:id' do
     id = params[:id]
+    logger.info "REPORT ID: #{id}"
     return 404 unless id.match?(/\A\d+\z/)
     @report = Report[id.to_i]
     return 404 unless @report
