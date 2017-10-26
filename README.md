@@ -24,6 +24,12 @@ Finally, run rackup if you want to start a development server:
 The "recipients" option in config.yml is passed as-is to sendmail
 (via Pony), so just separate multiple recipients with commas.
 
+### Administration Security
+
+There is no security on the admin site. I recommend setting up a
+password for /admin in your web server, or limiting it to a certain
+IP range.
+
 ## Testing
 
 Testing is easy with curl. Replace ```http://localhost:9292/```
