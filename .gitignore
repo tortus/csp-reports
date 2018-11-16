@@ -4,7 +4,6 @@ Thumbs.db
 vendor
 .bundle
 .env
-.ruby-version
 tmp
 
 *.log
