@@ -17,7 +17,7 @@ GEM
     pry (0.11.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rack (2.0.3)
+    rack (2.0.6)
     rack-protection (2.0.0)
       rack
     rake (12.2.1)
@@ -53,4 +53,4 @@ DEPENDENCIES
   tzinfo
 
 BUNDLED WITH
-   1.15.4
+   1.17.1
