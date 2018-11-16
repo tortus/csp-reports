@@ -1,9 +1,10 @@
 require 'rubygems'
 require 'bundler'
 
-# sinatra uses APP_ENV, so just copy it from RACK_ENV
+# sinatra uses APP_ENV, so just copy it from RACK_ENV if missing
 if ENV['RACK_ENV'] && !ENV['APP_ENV']
   ENV['APP_ENV'] = ENV['RACK_ENV']
+# if APP_ENV is set, make that authoritative instead
 elsif ENV['APP_ENV'] && ENV['APP_ENV'] != ENV['RACK_ENV']
   ENV['RACK_ENV'] = ENV['APP_ENV']
 end
